@@ -47,7 +47,9 @@ El uso de CPU tiene picos durante las busquedas a el api y escrituras a el redis
 
 ### Respuestas de JMeter
 
-![]()
+Realizando 2 consultas a el API y multiples consultas a el cache. Podemos observar la velocidad del cache comparado a las requests del API.
+
+![jmeter](https://raw.githubusercontent.com/j-ufm-datos2/entrega1-caching-lab/master/project%20description/resultadosJmeter.png)
 
 
 **Diagrama de Arquitectura**

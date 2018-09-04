@@ -3,12 +3,10 @@ const express = require('express');
 const responseTime = require('response-time');
 const axios = require('axios');
 const redis = require('redis');
-var influx = require('influx_conection')
+var influx_c = require('./influx_conection.js')
 var CONFIG = require('./config.json');
 
 const client = redis.createClient(process.env.REDIS_URL);
-
-const influx_c = influx.influx;
 
 const app = express();
 
@@ -49,3 +47,19 @@ app.get(CONFIG.apis.redis_search, (req, res) => {
     }
   });
 });
+
+influx_c.influx.getDatabaseNames()
+  .then(names => {
+    if (!names.includes('express_response_db')) {
+      return influx.createDatabase('express_response_db')
+    }
+  })
+  .then(() => {
+    app.listen(CONFIG.influx.port, function () {
+      console.log('Listening on port 3000')
+    })
+  })
+  .catch(err => {
+    console.log(err);
+    console.error(`Error creating Influx database!`);
+  });

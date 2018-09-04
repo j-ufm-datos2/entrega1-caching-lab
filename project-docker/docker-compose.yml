@@ -1,8 +1,6 @@
 redis:
   image: redis
   container_name: cache
-  volumes:
-    - "/home/docker/data:/data"
   expose:
     - 6379
 app:

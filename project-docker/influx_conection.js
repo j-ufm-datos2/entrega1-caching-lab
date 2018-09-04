@@ -1,4 +1,5 @@
 const Influx = require('influx');
+var app = require('./server.js')
 var CONFIG = require('./config.json');
 
 const influx = new Influx.InfluxDB({
@@ -36,20 +37,8 @@ function saveRequestInflux(result) {
   });
 }
 
-influx.getDatabaseNames()
-  .then(names => {
-    if (!names.includes('express_response_db')) {
-      return influx.createDatabase('express_response_db')
-    }
-  })
-  .then(() => {
-    app.listen(CONFIG.influx.port, function () {
-      console.log('Listening on port 3000')
-    })
-  })
-  .catch(err => {
-    console.error(`Error creating Influx database!`)
-  });
 
-
-module.exports = {influx, saveRequestInflux}
+module.exports = {
+  saveRequestInflux: saveRequestInflux,
+  influx: influx
+}
